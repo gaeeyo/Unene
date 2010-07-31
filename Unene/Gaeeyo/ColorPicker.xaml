@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="Gaeeyo.ColorPicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="205" d:DesignWidth="229"
+             xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+             >
+    
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="134*" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <!-- 色選択 -->
+        <Grid Background="Gray" Margin="5,5,34,9">
+            <Rectangle  
+                       Stroke="Black" StrokeThickness="1" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                        <GradientStop Color="#FFFF0000" Offset="0.0000" />
+                        <GradientStop Color="#FFFFFF00" Offset="0.1666" />
+                        <GradientStop Color="#FF00FF00" Offset="0.3333" />
+                        <GradientStop Color="#FF00FFFF" Offset="0.5000" />
+                        <GradientStop Color="#FF0000FF" Offset="0.6666" />
+                        <GradientStop Color="#FFFF00FF" Offset="0.8333" />
+                        <GradientStop Color="#FFFF0000" Offset="1.0000" />
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <Rectangle Name="picker1" StrokeThickness="1" Stroke="Black" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#00000000" Offset="0" />
+                        <GradientStop Color="Gray" Offset="1" />
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <Canvas>
+                <Ellipse Width="7" Height="7" Stroke="Black" StrokeThickness="2" Name="picker1Pointer"
+                     HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False"
+                     Margin="-3,-3,0,0"></Ellipse>
+            </Canvas>
+        </Grid>
+
+
+        <!-- 明るさ設定 -->
+        <Grid Margin="0,5,0,9" HorizontalAlignment="Right" Width="24" Name="picker2" Background="Transparent" >
+            <Rectangle StrokeThickness="1" HorizontalAlignment="Left" Width="16"
+                       Stroke="Black">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFFFFFFF" Offset="0" />
+                        <GradientStop Color="#FF888888" Offset="0.5" x:Name="picker2Color" />
+                        <GradientStop Color="#FF000000" Offset="1" />
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Canvas HorizontalAlignment="Right" Margin="0" Width="6" IsHitTestVisible="False" >
+                <Polygon Points="0,0 6,-6 6,6" Fill="Black" 
+                         StrokeThickness="0" 
+                         Name="picker2Pointer"/>
+            </Canvas>
+        </Grid>
+
+        <!-- 色見本 -->
+        <Rectangle Margin="5,0,172,0" Name="colorPreview" 
+                   Stroke="Gray" StrokeThickness="1" Height="72" 
+                   VerticalAlignment="Center"  Grid.Row="1"/>
+        
+
+        <!-- R/G/Bの数値 -->
+        <Grid HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center"
+                    Grid.Row="1">
+            <TextBlock Text="R" Margin="0" />
+            <TextBlock Text="G" Margin="0,25,0,0" />
+            <TextBlock Text="B" Margin="0,50,0,0" />
+            <toolkit:NumericUpDown Name="colorR" Margin="15,0,0,0" Width="45" 
+                                   VerticalAlignment="Top" Maximum="255"/>
+            <toolkit:NumericUpDown Name="colorG" Margin="15,25,0,0" Width="45" 
+                                   VerticalAlignment="Top" Maximum="255"/>
+            <toolkit:NumericUpDown Name="colorB" Margin="15,50,0,0" Width="45" 
+                                   VerticalAlignment="Top" Maximum="255"/>
+        </Grid>
+
+        <Grid HorizontalAlignment="Right" Margin="0,0,70,0" VerticalAlignment="Center" 
+                    Grid.Row="1">
+            <TextBlock Text="色合い" Margin="0"/>
+            <TextBlock Text="鮮やかさ" Margin="0,25,0,0"/>
+            <TextBlock Text="明るさ" Margin="0,50,0,0"/>
+            <toolkit:NumericUpDown Name="colorH" Margin="50,0,0,0" Width="45" 
+                                   VerticalAlignment="Top" Maximum="359"/>
+            <toolkit:NumericUpDown Name="colorS" Margin="50,25,0,0" Width="45" 
+                                   VerticalAlignment="Top" Maximum="100"/>
+            <toolkit:NumericUpDown Name="colorL" Margin="50,50,0,0" Width="45" 
+                                   VerticalAlignment="Top" Maximum="100"/>
+        </Grid>
+    </Grid>
+</UserControl>

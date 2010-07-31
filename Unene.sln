@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Web Developer Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unene", "Unene\Unene.csproj", "{DE858539-6A1F-482C-A321-4AC398C3CEBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE858539-6A1F-482C-A321-4AC398C3CEBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE858539-6A1F-482C-A321-4AC398C3CEBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE858539-6A1F-482C-A321-4AC398C3CEBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE858539-6A1F-482C-A321-4AC398C3CEBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

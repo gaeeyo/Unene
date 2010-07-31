@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Unene.NGWordSettingControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="200" d:DesignWidth="363" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    
+    <Grid x:Name="LayoutRoot" Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36" />
+            <RowDefinition  />
+        </Grid.RowDefinitions>
+        <TextBlock Name="textBlock1"
+                    Text="[未実装] 表示したくない文字列を正規表現で指定します。複数指定する場合は、改行で区切ってください。" TextWrapping="Wrap" />
+        <TextBox Name="ngWords" VerticalAlignment="Stretch" MaxHeight="1999" Grid.Row="1" TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Auto" />
+    </Grid>
+</UserControl>

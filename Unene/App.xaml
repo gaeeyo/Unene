@@ -1,0 +1,550 @@
+﻿<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             x:Class="Unene.App"
+             xmlns:my="clr-namespace:Unene"
+             xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+             xmlns:gaeeyo="clr-namespace:Gaeeyo"
+             xmlns:local_ui="clr-namespace:Unene.UI"
+             >
+    <Application.Resources>
+        <ResourceDictionary>
+            <Style TargetType="HyperlinkButton">
+                <Setter Property="Foreground" Value="#FF0000C0"/>
+            </Style>
+
+            <SolidColorBrush x:Key="TweetItemBackground" Color="#ffffffff"/>
+            <SolidColorBrush x:Key="TweetItemBackgroundAge0" Color="#ffffff99"/>
+            <SolidColorBrush x:Key="TweetItemBackgroundAge1" Color="#ffffffCC"/>
+            <SolidColorBrush x:Key="TweetItemBackgroundAge2" Color="#ffffffEE"/>
+            
+            <Style TargetType="ToolTip">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="VerticalOffset" Value="-2"/>
+                <Setter Property="FontFamily" Value="Arial"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White" Offset="0" />
+                            <GradientStop Color="#FFFFFFDB" Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush" Value="#FF878743"/>
+                <Setter Property="Padding" Value="4,0"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToolTip">
+                            <Border x:Name="Root" CornerRadius="4" BorderThickness="{TemplateBinding BorderThickness}" Background="#FFFFFFFF" BorderBrush="{TemplateBinding BorderBrush}">
+                                <Border BorderBrush="#FFFFFFFF" BorderThickness="2" CornerRadius="1" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                    <Border.Resources>
+                                        <Storyboard x:Key="Visible State"/>
+                                        <Storyboard x:Key="Normal State"/>
+                                    </Border.Resources>
+                                    <ContentPresenter
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Cursor="{TemplateBinding Cursor}"
+                              Margin="{TemplateBinding Padding}"/>
+                                </Border>
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#80000000" Opacity="0.4" BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
+
+
+            <!-- RichEditBox -->
+            <Style TargetType="RichTextBox" x:Name="SimpleRichTextBox">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <ContentControl x:Name="ContentElement" VerticalAlignment="Center" Margin="{TemplateBinding Margin}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <!-- HyperlinkImageButton -->
+            <Style TargetType="HyperlinkButton" x:Name="SimpleHyperlinkButton">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="HyperlinkButton">
+                            <ContentPresenter x:Name="contentPresenter"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            Margin="{TemplateBinding Padding}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <!-- ImageButton -->
+            <Style TargetType="Button" x:Name="ImageButton">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" BorderThickness="0" CornerRadius="{TemplateBinding}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style TargetType="local_ui:ImageButton">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local_ui:ImageButton">
+                            <Border x:Name="contentPresenter" Background="{TemplateBinding Background}" BorderThickness="0" 
+                                    CornerRadius="{TemplateBinding CornerRadius}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ツイートビュー -->
+            <Style TargetType="local_ui:TweetView" x:Key="test2">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local_ui:TweetView">
+
+                            <Grid x:Name="LayoutRoot" Background="{TemplateBinding Background}" TextOptions.TextHintingMode="Fixed">
+                                <Grid Margin="0,3,3,3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Button x:Name="profileImage" Style="{StaticResource ImageButton}" Margin="0" Opacity="0.4" 
+                                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.RowSpan="2"/>
+
+                                    <HyperlinkButton x:Name="nameText" Style="{StaticResource SimpleHyperlinkButton}"
+                                                     Foreground="Blue" FontWeight="Bold" 
+                                                     HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0"/>
+                                    <HyperlinkButton x:Name="timeText"  Style="{StaticResource SimpleHyperlinkButton}"
+                                                     Foreground="Black" 
+                                                     HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0"/>
+                                    <RichTextBox x:Name="textBody" IsReadOnly="True" TextWrapping="Wrap" Grid.Row="1"
+                                                 HorizontalAlignment="Left" HorizontalContentAlignment="Stretch"
+                                                 VerticalAlignment="Top" Style="{StaticResource SimpleRichTextBox}"/>
+                                </Grid>
+
+                                <!-- グラデーション -->
+                                <Rectangle  Height="4" VerticalAlignment="Bottom" IsHitTestVisible="False" >
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
+                                            <GradientStopCollection>
+                                                <GradientStop Offset="0" Color="#00000000"/>
+                                                <GradientStop Offset="1" Color="#22000000"/>
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="local_ui:TweetView" x:Key="test3">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local_ui:TweetView">
+
+                            <Grid x:Name="LayoutRoot" Background="White">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Button Cursor="Hand" x:Name="profileImage" Grid.Column="0" Margin="3" >
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    BorderThickness="0">
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                
+                                <RichTextBox x:Name="textBody" IsReadOnly="True" TextWrapping="Wrap" Grid.Column="1"
+                                             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                             VerticalAlignment="Stretch"
+                                             Margin="0,3,3,3">
+                                    <RichTextBox.Template>
+                                        <ControlTemplate>
+                                            <Grid>
+                                                <ContentControl x:Name="ContentElement" VerticalAlignment="Center" Margin="2,1,1,1"/>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </RichTextBox.Template>
+                                </RichTextBox>
+                                
+                                <Rectangle Grid.ColumnSpan="2" Height="4" VerticalAlignment="Bottom" >
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
+                                            <GradientStopCollection>
+                                                <GradientStop Offset="0" Color="#00000000"/>
+                                                <GradientStop Offset="1" Color="#22000000"/>
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ツイートビュー5: 画像無し -->
+            <Style TargetType="local_ui:TweetView" x:Key="TweetView_5">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local_ui:TweetView">
+
+                            <Grid x:Name="LayoutRoot" Background="{TemplateBinding Background}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <HyperlinkButton x:Name="nameText" Style="{StaticResource SimpleHyperlinkButton}"
+                                                 Margin="3,3,3,0"
+                                                    Foreground="{TemplateBinding Foreground}" Opacity="0.8" FontWeight="Bold"
+                                                    HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0"/>
+                                <HyperlinkButton x:Name="timeText"  Style="{StaticResource SimpleHyperlinkButton}"
+                                                 Margin="3,3,3,0"
+                                                    Foreground="{TemplateBinding Foreground}" Opacity="0.8"
+                                                    HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0"/>
+                                <local_ui:TweetTextBox x:Name="textBody" IsReadOnly="True" TextWrapping="Wrap" Grid.Row="1"
+                                                Margin="3"
+                                                HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" AutoFontSize="False"
+                                                VerticalAlignment="Top" Style="{StaticResource SimpleRichTextBox}"/>
+
+                                <!-- グラデーション -->
+                                <Rectangle  Height="1" VerticalAlignment="Bottom" IsHitTestVisible="False" Grid.RowSpan="2" >
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
+                                            <GradientStopCollection>
+                                                <GradientStop Offset="0" Color="#00000000"/>
+                                                <GradientStop Offset="1" Color="#66000000"/>
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <Rectangle Width="1" HorizontalAlignment="Right" IsHitTestVisible="False" Grid.RowSpan="2" >
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStopCollection>
+                                                <GradientStop Offset="0" Color="#00000000"/>
+                                                <GradientStop Offset="1" Color="#66000000"/>
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ツイートビュー4: 匿名希望 -->
+            <Style TargetType="local_ui:TweetView" x:Key="TweetView_4">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local_ui:TweetView">
+
+                            <Grid x:Name="LayoutRoot" Background="{TemplateBinding Background}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+
+                                <local_ui:ImageButton  x:Name="profileImage" Grid.Column="0"
+                                                           Margin="3"
+                                        HorizontalAlignment="Left" VerticalAlignment="Top"
+                                        Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}">
+                                    <local_ui:ImageButton.Effect>
+                                        <BlurEffect Radius="{TemplateBinding IconSize}"/>
+                                    </local_ui:ImageButton.Effect>
+                                </local_ui:ImageButton>
+                                <Grid Margin="3,3,5,3" Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+
+
+                                    <HyperlinkButton x:Name="nameText" Style="{StaticResource SimpleHyperlinkButton}"
+                                                     Foreground="{TemplateBinding Foreground}" Opacity="0.8" FontWeight="Bold"
+                                                     HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0">
+                                        <HyperlinkButton.Effect>
+                                            <BlurEffect Radius="10"/>
+                                        </HyperlinkButton.Effect>
+                                    </HyperlinkButton>
+                                    <HyperlinkButton x:Name="timeText"  Style="{StaticResource SimpleHyperlinkButton}"
+                                                     Foreground="{TemplateBinding Foreground}" Opacity="0.8"
+                                                     HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0"/>
+
+                                    <local_ui:TweetTextBox x:Name="textBody" IsReadOnly="True" TextWrapping="Wrap" Grid.Row="1"
+                                                 HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" AutoFontSize="False"
+                                                 VerticalAlignment="Top" Style="{StaticResource SimpleRichTextBox}">
+                                        <local_ui:TweetTextBox.Resources>
+                                            <Style TargetType="Hyperlink">
+                                                <Setter Property="FontStyle" Value="Italic"/>
+                                                <Setter Property="Foreground">
+                                                    <Setter.Value>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                            <GradientStopCollection>
+                                                                <GradientStop Offset="0" Color="#00000000"/>
+                                                                <GradientStop Offset="0.25" Color="#FF000000"/>
+                                                                <GradientStop Offset="0.5" Color="#00000000"/>
+                                                                <GradientStop Offset="0.75" Color="#FF000000"/>
+                                                                <GradientStop Offset="1" Color="#00000000"/>
+                                                            </GradientStopCollection>
+                                                        </LinearGradientBrush>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </local_ui:TweetTextBox.Resources>
+                                    </local_ui:TweetTextBox>
+                                </Grid>
+
+                                <!-- グラデーション -->
+                                <Rectangle  Height="2" VerticalAlignment="Bottom" IsHitTestVisible="False" Grid.ColumnSpan="2" >
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
+                                            <GradientStopCollection>
+                                                <GradientStop Offset="0" Color="#00000000"/>
+                                                <GradientStop Offset="1" Color="#66000000"/>
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <Rectangle Width="2" HorizontalAlignment="Right" IsHitTestVisible="False" Grid.ColumnSpan="2" >
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStopCollection>
+                                                <GradientStop Offset="0" Color="#00000000"/>
+                                                <GradientStop Offset="1" Color="#66000000"/>
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ツイートビュー3: タイル -->
+            <Style TargetType="local_ui:TweetView" x:Key="TweetView_3">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local_ui:TweetView">
+
+                            <Grid x:Name="LayoutRoot">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                    <Grid.Resources>
+                                        <gaeeyo:BrushToColorConverter x:Key="BrushToColorConverter"/>
+                                    </Grid.Resources>
+
+                                    <Grid.Background>
+                                    <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
+                                        <GradientStopCollection>
+                                            <GradientStop Offset="0.8" 
+                                                          Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={StaticResource BrushToColorConverter}}"/>
+                                            <GradientStop Offset="1" 
+                                                          Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BodyBackgroundDark}"/>
+                                        </GradientStopCollection>
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+
+                                <local_ui:ImageButton  x:Name="profileImage" Grid.Column="0"
+                                                           Margin="4"
+                                        HorizontalAlignment="Left" VerticalAlignment="Top"
+                                        Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}"/>
+                                <Grid Margin="3,3,5,3" Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+
+                                    
+                                    <HyperlinkButton x:Name="nameText" Style="{StaticResource SimpleHyperlinkButton}"
+                                                     Foreground="{TemplateBinding Foreground}" Opacity="0.8" FontWeight="Bold"
+                                                     HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0"/>
+                                    <HyperlinkButton x:Name="timeText"  Style="{StaticResource SimpleHyperlinkButton}"
+                                                     Foreground="{TemplateBinding Foreground}" Opacity="0.8"
+                                                     HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0"/>
+                                    <local_ui:TweetTextBox x:Name="textBody" IsReadOnly="True" TextWrapping="Wrap" Grid.Row="1"
+                                                 HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" AutoFontSize="False"
+                                                 VerticalAlignment="Top" Style="{StaticResource SimpleRichTextBox}"/>
+                                </Grid>
+
+                                <!-- グラデーション -->
+                                <!--<Rectangle  Height="10" VerticalAlignment="Bottom" IsHitTestVisible="False" Grid.ColumnSpan="2" >
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
+                                            <GradientStopCollection>
+                                                <GradientStop Offset="0" Color="#00000000"/>
+                                                <GradientStop Offset="0.99" Color="#10000000"/>
+                                                <GradientStop Offset="1" Color="#66000000"/>
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>-->
+                                
+                                <Rectangle Width="2" HorizontalAlignment="Right" IsHitTestVisible="False" Grid.ColumnSpan="2"
+                                           >
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush x:Name="grad1" StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Offset="0" Color="#00000000"/>
+                                            <GradientStop Offset="1" Color="#66000000"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <!-- ツイートビュー2: かまぼこ -->
+            <Style TargetType="local_ui:TweetView" x:Key="TweetView_2">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local_ui:TweetView">
+
+                            <Grid x:Name="LayoutRoot" Margin="1,1,1,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <local_ui:ImageButton  x:Name="profileImage" Grid.Column="0"
+                                        VerticalAlignment="Center" CornerRadius="4"
+                                                       Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}">
+                                    <local_ui:ImageButton.Effect>
+                                        <DropShadowEffect Color="#55000000" BlurRadius="0" ShadowDepth="2" />
+                                    </local_ui:ImageButton.Effect>
+                                </local_ui:ImageButton>
+
+                                <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1">
+                                    <Rectangle Grid.Column="1" Fill="{TemplateBinding Background}" Margin="4,0,0,0"
+                                               RadiusX="8" RadiusY="8"/>
+                                    <Rectangle Grid.Column="1" Margin="5,1,1,0" 
+                                               RadiusX="8" RadiusY="8" >
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
+                                                <GradientStopCollection>
+                                                    <GradientStop Offset="0" Color="#99FFFFFF"/>
+                                                    <GradientStop Offset="0.01" Color="#55FFFFFF"/>
+                                                    <GradientStop Offset="0.1" Color="#00FFFFFF"/>
+                                                    <GradientStop Offset="0.9" Color="#00000000"/>
+                                                    <GradientStop Offset="1" Color="#33000000"/>
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <local_ui:TweetTextBox x:Name="textBody" IsReadOnly="True" TextWrapping="Wrap" Grid.Column="1"
+                                                 HorizontalContentAlignment="Stretch" AutoFontSize="False"
+                                                 Margin="6,4,4,4" Style="{StaticResource SimpleRichTextBox}"/>
+                                </Grid>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ツイートビュー1: 高さを詰める -->
+            <Style TargetType="local_ui:TweetView" x:Key="TweetView_1">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local_ui:TweetView">
+
+                            <Grid x:Name="LayoutRoot" Margin="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <local_ui:ImageButton  x:Name="profileImage" Grid.Column="0" CornerRadius="4"
+                                        VerticalAlignment="Stretch"  Margin="0,0,0,1" HorizontalAlignment="Left"
+                                                       Width="{TemplateBinding IconSize}"
+                                        >
+                                    <local_ui:ImageButton.Effect>
+                                        <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="#000000" Opacity="0.5"/>
+                                    </local_ui:ImageButton.Effect>
+                                </local_ui:ImageButton>
+
+                                <Rectangle IsHitTestVisible="False" Margin="2,0,0,0" Grid.Column="1"
+                                           Stroke="#88000000" StrokeThickness="1"
+                                           RadiusX="4" RadiusY="4"/>
+                                <Rectangle Grid.Column="1" Fill="{TemplateBinding Background}" Margin="2,0,0,1"
+                                           RadiusX="4" RadiusY="4" IsHitTestVisible="False"/>
+                                <local_ui:TweetTextBox x:Name="textBody" IsReadOnly="True" TextWrapping="Wrap" Grid.Column="1"
+                                             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                             VerticalAlignment="Stretch"
+                                             Margin="3,1,1,2" Style="{StaticResource SimpleRichTextBox}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ツイートビュー0: Unene標準　-->
+            <Style TargetType="local_ui:TweetView" x:Key="TweetView_0">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local_ui:TweetView">
+
+                            <Grid x:Name="LayoutRoot" Margin="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <local_ui:ImageButton  x:Name="profileImage" Grid.Column="0"
+                                        VerticalAlignment="Top" CornerRadius="4"
+                                                       Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}">
+                                    <local_ui:ImageButton.Effect>
+                                        <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="#000000" Opacity="0.5"/>
+                                    </local_ui:ImageButton.Effect>
+                                </local_ui:ImageButton>
+
+                                <Rectangle IsHitTestVisible="False" Margin="2,0,0,0" Grid.Column="1"
+                                           Stroke="#88000000" StrokeThickness="1"
+                                           RadiusX="4" RadiusY="4"/>
+                                <Rectangle Grid.Column="1" Fill="{TemplateBinding Background}" Margin="2,0,0,1"
+                                           RadiusX="4" RadiusY="4" IsHitTestVisible="False"/>
+                                <local_ui:TweetTextBox x:Name="textBody" IsReadOnly="True" TextWrapping="Wrap" Grid.Column="1"
+                                             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                             VerticalAlignment="Stretch"
+                                             Margin="4,2,2,3" Style="{StaticResource SimpleRichTextBox}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,7 @@
+﻿<UserControl x:Class="GifImageLib.GifImage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+    <Canvas x:Name="LayoutRoot">
+        <Image x:Name="RootImage" Width="200" Height="200"></Image>
+    </Canvas>
+</UserControl>

@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="Unene.ViewSettingControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:local="clr-namespace:Unene.UI"
+    mc:Ignorable="d"
+    d:DesignHeight="290" d:DesignWidth="368" xmlns:my="clr-namespace:Gaeeyo">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <sdk:Label Height="19" HorizontalAlignment="Left" Margin="18,10,0,0" Name="label1" VerticalAlignment="Top" Content="フォント" />
+        <ComboBox Height="23" Margin="76,7,0,0" Name="FontName" VerticalAlignment="Top" Width="202" HorizontalAlignment="Left" />
+        <Border BorderBrush="Silver" BorderThickness="1" Height="167" Margin="8,43,13,0" Name="border2" VerticalAlignment="Top" CornerRadius="4">
+            <Grid Name="grid3">
+                <!-- レイアウト -->
+                <TextBlock HorizontalAlignment="Left" Margin="6,8,0,0" Name="textBlock1" Text="レイアウト" VerticalAlignment="Top" />
+                <ComboBox Margin="77,6,6,0" Name="viewStyles" VerticalAlignment="Top" SelectedIndex="2">
+                    <ComboBox.Items>
+                        <ComboBoxItem Tag="0" Content="0:標準"/>
+                        <ComboBoxItem Tag="1" Content="1:みっちり"/>
+                        <ComboBoxItem Tag="2" Content="2:かまぼこ"/>
+                        <ComboBoxItem Tag="3" Content="3:タイル"/>
+                        <ComboBoxItem Tag="4" Content="4:タイル(匿名希望)"/>
+                        <ComboBoxItem Tag="5" Content="5:画像無し"/>
+                    </ComboBox.Items>
+                </ComboBox>
+
+                <!-- 文字サイズ -->
+                <sdk:Label Content="文字サイズ" HorizontalAlignment="Left" Margin="9,36,0,0" Name="label9"
+                            VerticalAlignment="Top" />
+                <TextBox HorizontalAlignment="Left" Margin="97,32,0,0" Name="bodyFontSize"
+                            Text="{Binding Path=Value, ElementName=bodyFontSizeSlider, Mode=TwoWay, StringFormat=F0}" Width="47" 
+                         IsReadOnly="True" Height="26" VerticalAlignment="Top" Padding="2" />
+                <Slider Margin="150,36,6,0" Name="bodyFontSizeSlider" VerticalAlignment="Top" Maximum="100" Minimum="6" 
+                        SmallChange="1" LargeChange="1" Value="6" />
+
+                <!-- 太文字 -->
+                <CheckBox Content="太字" HorizontalAlignment="Left" Margin="6,90,0,0" Name="bodyBold" VerticalAlignment="Top" />
+
+                <!-- アイコンサイズ -->
+                <sdk:Label HorizontalAlignment="Left" Margin="9,68,0,0" Name="label5"
+                                    VerticalAlignment="Top" Content="アイコンサイズ" />
+                <TextBox Margin="97,64,0,0" Name="iconSize"
+                                    Text="{Binding ElementName=iconSizeSlider, Path=Value, StringFormat=F0}" VerticalAlignment="Top"
+                                    HorizontalAlignment="Left" IsReadOnly="True" Width="47" />
+                <Slider LargeChange="1" Margin="150,66,6,0" Maximum="300" Minimum="1"
+                                    Name="iconSizeSlider" SmallChange="1" Value="6" VerticalAlignment="Top" />
+
+                <!-- 本文の色 -->
+                <local:ColorButton Content="本文の色" HorizontalAlignment="Left" Margin="9,113,0,0" x:Name="tweetColor"
+                            VerticalAlignment="Top" Width="77" />
+                <local:ColorButton Content="ツイートの背景" HorizontalAlignment="Left" Margin="92,113,0,0" x:Name="tweetBackground"
+                            VerticalAlignment="Top" Width="110"/>
+                <local:ColorButton Content="新着の背景" HorizontalAlignment="Left" Margin="208,113,0,0" x:Name="newTweetBackground"
+                            VerticalAlignment="Top" Width="85"/>
+
+
+            </Grid>
+        </Border>
+        <sdk:Label Name="label2" Content="ツイート" VerticalAlignment="Top" HorizontalAlignment="Left"
+                            Margin="22,34,0,0" Background="White" Padding="8,0" />
+        <local:ColorButton Content="背景色" HorizontalAlignment="Left" Margin="8,214,0,0" x:Name="tweetsPanelColor" Width="70" 
+                VerticalAlignment="Top" />
+        <ComboBox Height="24" Margin="86,214,83,0" Name="bodyBackgroundOpacity" VerticalAlignment="Top">
+            <ComboBox.Items>
+                <ComboBoxItem Tag="-1.00">壁紙を表示しない</ComboBoxItem>
+                <ComboBoxItem Tag="0.00">不透明</ComboBoxItem>
+                <ComboBoxItem Tag="0.10">透過 10%</ComboBoxItem>
+                <ComboBoxItem Tag="0.20">透過 20%</ComboBoxItem>
+                <ComboBoxItem Tag="0.30">透過 30%</ComboBoxItem>
+                <ComboBoxItem Tag="0.40">透過 40%</ComboBoxItem>
+                <ComboBoxItem Tag="0.50">透過 50%</ComboBoxItem>
+                <ComboBoxItem Tag="0.60">透過 60%</ComboBoxItem>
+                <ComboBoxItem Tag="0.70">透過 70%</ComboBoxItem>
+                <ComboBoxItem Tag="0.80">透過 80%</ComboBoxItem>
+                <ComboBoxItem Tag="0.90">透過 90%</ComboBoxItem>
+                <ComboBoxItem Tag="1.00">透明</ComboBoxItem>
+            </ComboBox.Items>
+        </ComboBox>
+        <Button Content="壁紙" Margin="0,213,14,0" x:Name="wallPaper" 
+                VerticalAlignment="Top" Click="wallPaper_Click" HorizontalAlignment="Right" Width="63" />
+        <CheckBox Content="時計を表示" Height="16" HorizontalAlignment="Left" Margin="8,242,0,0" Name="clock" VerticalAlignment="Top" />
+    </Grid>
+</UserControl>
