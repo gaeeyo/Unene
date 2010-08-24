@@ -355,16 +355,18 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="local_ui:TweetView">
 
-                            <Grid x:Name="LayoutRoot">
+                            <Grid x:Name="LayoutRoot" Background="{TemplateBinding Background}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                    <Grid.Resources>
-                                        <gaeeyo:BrushToColorConverter x:Key="BrushToColorConverter"/>
-                                    </Grid.Resources>
+                                
+                                <Grid.Resources>
+                                    <gaeeyo:BrushToColorConverter x:Key="BrushToColorConverter"/>
+                                </Grid.Resources>
 
-                                    <Grid.Background>
+                                <!--
+                                <Grid.Background>
                                     <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
                                         <GradientStopCollection>
                                             <GradientStop Offset="0.8" 
@@ -372,9 +374,11 @@
                                             <GradientStop Offset="1" 
                                                           Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BodyBackgroundDark}"/>
                                         </GradientStopCollection>
-                                    </LinearGradientBrush>
+                                    </LinearGradientBrush> 
+                                    <SolidColorBrush Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={StaticResource BrushToColorConverter}}"/>
                                 </Grid.Background>
-
+-->
+                                
                                 <local_ui:ImageButton  x:Name="profileImage" Grid.Column="0"
                                                            Margin="4"
                                         HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -399,17 +403,17 @@
                                 </Grid>
 
                                 <!-- グラデーション -->
-                                <!--<Rectangle  Height="10" VerticalAlignment="Bottom" IsHitTestVisible="False" Grid.ColumnSpan="2" >
+                                <Rectangle IsHitTestVisible="False" Grid.ColumnSpan="2" >
                                     <Rectangle.Fill>
                                         <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
                                             <GradientStopCollection>
                                                 <GradientStop Offset="0" Color="#00000000"/>
-                                                <GradientStop Offset="0.99" Color="#10000000"/>
+                                                <GradientStop Offset="0.99" Color="#22000000"/>
                                                 <GradientStop Offset="1" Color="#66000000"/>
                                             </GradientStopCollection>
                                         </LinearGradientBrush>
                                     </Rectangle.Fill>
-                                </Rectangle>-->
+                                </Rectangle>
                                 
                                 <Rectangle Width="2" HorizontalAlignment="Right" IsHitTestVisible="False" Grid.ColumnSpan="2"
                                            >
