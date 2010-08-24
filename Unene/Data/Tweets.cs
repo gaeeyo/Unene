@@ -101,6 +101,7 @@ namespace Unene
             Tweets tweets = new Tweets();
             foreach (JsonValue jv in JsonValue.Parse(json))
             {
+                if (jv == null) continue;
                 string created_at = (string)jv["created_at"];
                 string [] time = created_at.Split(' ');
 
